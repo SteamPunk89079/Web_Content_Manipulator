@@ -5,6 +5,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
+
+    "clean_upload": "Remove-Item .\\uploads\\* -Recurse -Force",
+    "clean_upload_windows": "rmdir /s /q uploads && mkdir uploads",
+    "clean_output": "Remove-Item .\\output\\* -Recurse -Force",
+    "clean_output_windows": "rmdir /s /q output && mkdir output",
+    "clean_windows": "npm run clean_upload_windows && npm run clean_output_windows",
+    
+    "clean":"npm run clean_upload && npm run clean_output && npm run clean_windows",
+    
     "dev": "nodemon server"
   },
   "type": "module",

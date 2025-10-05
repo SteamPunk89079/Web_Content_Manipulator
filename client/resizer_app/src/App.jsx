@@ -2,13 +2,16 @@ import { useState } from "react";
 
 function App() {
   const [file, setFile] = useState(null);
+
   const [outputUrl, setOutputUrl] = useState("");
   const [inputUrl, setInputUrl] = useState("");
 
+  const [originalSize, setOriginalSize] = useState("");
+  const [processedSize, setProcessedSize] = useState("");
 
+  //-------------------------UPLOAD----------------------------------
   const handleUpload = async () => {
     if (!file) return alert("Please select an image first!");
-
     const formData = new FormData();
     formData.append("image", file);
 
@@ -19,6 +22,7 @@ function App() {
 
     const data = await res.json();
     console.log(data);
+    setProcessedSize(data.size); 
 
     const initialUrl = data.file;
     const originalName = initialUrl.replace(/^processed-/, "");
@@ -30,7 +34,23 @@ function App() {
       alert("Processing failed!");
     }
   };
+  //-------------------------UPLOAD----------------------------------
+  //-------------------------ASSETS----------------------------------
+  const handleImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    setOriginalSize(`${naturalWidth} × ${naturalHeight}px`);
+  };
+  
+  const handleProcessedImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    if (!processedSize) { 
+      setProcessedSize(`${naturalWidth} × ${naturalHeight}px`);
+    }
+  };
+  //-------------------------ASSETS----------------------------------
 
+
+  //-------------------------RENDER----------------------------------
   return (
     <div style={{ padding: 30 }}>
       <h1>FFmpeg Image Processor</h1>
@@ -40,18 +60,23 @@ function App() {
       {inputUrl && (
         <div>
           <h2>Initial Image:</h2>
-          <img src={inputUrl} alt="Original" width="400" />
+          <img src={inputUrl} alt="Original" width="400" onLoad={handleImageLoad} />
+          <h4>Original size: {originalSize || "Loading..."}</h4>
         </div>
       )}
 
       {outputUrl && (
         <div>
           <h2>Processed Image:</h2>
-          <img src={outputUrl} alt="Processed" width="400" />
+          <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad}/>
+          <h4>Processed size: {processedSize || "Loading..."}</h4>
         </div>
       )}
     </div>
   );
+  //-------------------------RENDER----------------------------------
+
+  
 }
 
 export default App;

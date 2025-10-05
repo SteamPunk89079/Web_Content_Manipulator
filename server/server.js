@@ -9,16 +9,17 @@ import { stderr, stdout } from "process";
 const app = express();
 app.use(cors());
 
-// For ES Modules __dirname trick
+//-----------------------ES-MODULES-PARSE-----------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+//-----------------------ES-MODULES-PARSE-----------------------
 
 // Ensure folders exist
 const uploadDir = path.join(__dirname, "uploads");
 const outputDir = path.join(__dirname, "output");
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
-if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
-
+//if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+//if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
+//Doesn t work
 
 // Storage config for multer
 const storage = multer.diskStorage({
@@ -38,13 +39,29 @@ app.post("/process", upload.single("image"), (req, res) => {
   const ffmpegCmd = `${ffmpegPath} -y -i "${inputPath}" -vf scale=800:600 "${outputPath}"`;
 
   exec(ffmpegCmd, (error, stdout, stderr) => {
-    if (error) {
-      console.error("FFmpeg error:", error);
-      return res.status(500).send("Processing failed");
-    }
-    console.log("FFmpeg output:", stdout || stderr);
-    res.json({ message: "Processing complete", file: `processed-${req.file.filename}` });
-  });
+      if (error) {
+        console.error("FFmpeg error:", error);
+        return res.status(500).send("Processing failed");
+      }
+  
+      const ffprobeCmd = `${ffmpegPath.replace("ffmpeg.exe", "ffprobe.exe")} -v error -show_entries stream=width,height -of csv=p=0:s=x "${outputPath}"`;
+  
+      exec(ffprobeCmd, (probeError, probeStdout) => {
+        if (probeError) {
+          console.error("FFprobe error:", probeError);
+          return res.status(500).send("Failed to get output size");
+        }
+  
+        const outputSize = probeStdout.trim(); // e.g. "800x600"
+        console.log(`✅ Processed ${req.file.filename} → ${outputSize}`);
+  
+        res.json({
+          message: "Processing complete",
+          file: `processed-${req.file.filename}`,
+          size: outputSize,
+        });
+      });
+    });
 });
 
 console.log("WORKS");

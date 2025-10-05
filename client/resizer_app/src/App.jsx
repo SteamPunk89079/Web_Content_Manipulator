@@ -3,6 +3,8 @@ import { useState } from "react";
 function App() {
   const [file, setFile] = useState(null);
   const [outputUrl, setOutputUrl] = useState("");
+  const [inputUrl, setInputUrl] = useState("");
+
 
   const handleUpload = async () => {
     if (!file) return alert("Please select an image first!");
@@ -16,7 +18,13 @@ function App() {
     });
 
     const data = await res.json();
+    console.log(data);
+
+    const initialUrl = data.file;
+    const originalName = initialUrl.replace(/^processed-/, "");
+
     if (res.ok) {
+      setInputUrl(`http://localhost:3001/uploads/${originalName}`);
       setOutputUrl(`http://localhost:3001/output/${data.file}`);
     } else {
       alert("Processing failed!");
@@ -28,6 +36,13 @@ function App() {
       <h1>FFmpeg Image Processor</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
       <button onClick={handleUpload}>Upload & Process</button>
+
+      {inputUrl && (
+        <div>
+          <h2>Initial Image:</h2>
+          <img src={inputUrl} alt="Original" width="400" />
+        </div>
+      )}
 
       {outputUrl && (
         <div>

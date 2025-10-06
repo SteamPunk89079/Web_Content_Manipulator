@@ -52,10 +52,10 @@ function App() {
 
   //-------------------------RENDER----------------------------------
   return (
-    <div className="app_card">
+    <div style={{ padding: 30 }}>
       <h1>FFmpeg Image Processor</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
-      <button onClick={handleUpload} role="button">Upload</button>
+      <button onClick={handleUpload}>Upload</button>
 
       {inputUrl && (
         <div>

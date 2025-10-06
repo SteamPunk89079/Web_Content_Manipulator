@@ -52,26 +52,29 @@ function App() {
 
   //-------------------------RENDER----------------------------------
   return (
-    <div className="app_card">
-      <h1>FFmpeg Image Processor</h1>
+    <div className="app_card" style={{background: "#e63946",padding: "30px",borderRadius: "15px",maxWidth: "100%",boxSizing: "border-box",}}>
+      <h1 style={{ fontWeight: "bold" }}>FFmpeg Image Processor</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
       <button onClick={handleUpload} role="button">Upload</button>
+      
+      <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center" }}>
+        {inputUrl && (
+          <div>
+            <h2>Initial Image:</h2>
+            <img src={inputUrl} alt="Original" width="400" onLoad={handleImageLoad} />
+            <h4>Original size: {originalSize || "Loading..."}</h4>
+          </div>
+        )}
 
-      {inputUrl && (
-        <div>
-          <h2>Initial Image:</h2>
-          <img src={inputUrl} alt="Original" width="400" onLoad={handleImageLoad} />
-          <h4>Original size: {originalSize || "Loading..."}</h4>
-        </div>
-      )}
+        {outputUrl && (
+          <div>
+            <h2>Processed Image:</h2>
+            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad}/>
+            <h4>Processed size: {processedSize || "Loading..."}</h4>
+          </div>
+        )}
+      </div>
 
-      {outputUrl && (
-        <div>
-          <h2>Processed Image:</h2>
-          <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad}/>
-          <h4>Processed size: {processedSize || "Loading..."}</h4>
-        </div>
-      )}
     </div>
   );
   //-------------------------RENDER----------------------------------

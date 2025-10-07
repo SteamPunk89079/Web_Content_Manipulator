@@ -1,26 +1,10 @@
-body {
-  background: #f7f9fc;
-  margin: 0;
-  font-family: system-ui, sans-serif;
-}
-
-/* container for multiple apps */
-.app-container {
-  display: flex;
-  flex-wrap: wrap;         
-  gap: 20px;              
-  justify-content: center; 
-  padding: 40px;
-  align-items: flex-start; 
-}
-
-/* make each app look like a card */
-.app-container > div {
-  background: rgb(240, 56, 56);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  height: 700px;
-  width: 80%; 
+.app-card{
+  background: #e63946;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 100%;
   box-sizing: border-box;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }

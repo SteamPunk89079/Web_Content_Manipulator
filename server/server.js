@@ -41,6 +41,8 @@ if (platform === "win32") {
   console.log("Running on Windows");
   ffmpegPath = `"D:\\_installers\\ffmpeg-2025-10-01-git-1a02412170-full_build\\bin\\ffmpeg.exe"`;
   ffprobePath = ffmpegPath.replace("ffmpeg.exe", "ffprobe.exe");
+}else{
+  console.log("Running on Mac OS");
 }
 //-----------------------OS-DETECTION---------------------------
 
@@ -55,7 +57,7 @@ app.post("/process", upload.single("image"), (req, res) => {
 
   exec(ffmpegCmd, (error, stdout, stderr) => {
     if (error) {
-      console.error("❌ FFmpeg error:", error);
+      console.error("FFmpeg error:", error);
       return res.status(500).send("Processing failed");
     }
 
@@ -63,7 +65,7 @@ app.post("/process", upload.single("image"), (req, res) => {
 
     exec(ffprobeCmd, (probeError, probeStdout) => {
       if (probeError) {
-        console.error("❌ FFprobe error:", probeError);
+        console.error("FFprobe error:", probeError);
         return res.status(500).send("Failed to get output size");
       }
 

@@ -53,7 +53,7 @@ function App() {
   //-------------------------RENDER----------------------------------
   return (
     <div className="app_card">
-      <h1 style={{ fontWeight: "bold" }}>FFmpeg Image Processor</h1>
+      <h1 style={{ fontWeight: "bold" }}>Default resizer</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
       <button onClick={handleUpload} role="button">Upload</button>
       
@@ -69,7 +69,7 @@ function App() {
         {outputUrl && (
           <div>
             <h2>Processed Image:</h2>
-            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad}/>
+            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad} style={{border: "4px solid gold"}}/>
             <h4>Processed size: {processedSize || "Loading..."}</h4>
           </div>
         )}

@@ -8,3 +8,10 @@
   margin-left: 20px;
   margin-right: 20px;
 }
+.resize_fields{
+  width: 50px;
+  margin-right: 20px;
+}
+h1{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

@@ -52,17 +52,12 @@ function App() {
 
   //-------------------------RENDER----------------------------------
   return (
-    <div className="app_card" >
-      <h1 style={{ fontWeight: "bold" }}>Custom resizer</h1>
+    <div className="app_card">
+      <h1 style={{ fontWeight: "bold" }}>Fifth resizer</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
       <button onClick={handleUpload} role="button">Upload</button>
       
-      <div>
-        <input className="resize_fields" id="width" type="number" min="1" placeholder="Width" />
-        <input className="resize_fields" id="height" type="number" min="1" placeholder="Height" />
-      </div>
-      
-      <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center"}}>
+      <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center" }}>
         {inputUrl && (
           <div>
             <h2>Initial Image:</h2>
@@ -74,7 +69,7 @@ function App() {
         {outputUrl && (
           <div>
             <h2>Processed Image:</h2>
-            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad} style={{border: "4px solid gold"}}s/>
+            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad}/>
             <h4>Processed size: {processedSize || "Loading..."}</h4>
           </div>
         )}

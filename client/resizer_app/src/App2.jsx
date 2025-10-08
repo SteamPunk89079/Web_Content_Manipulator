@@ -9,7 +9,7 @@ function App() {
   const [originalSize, setOriginalSize] = useState("");
   const [processedSize, setProcessedSize] = useState("");
 
-  //-------------------------UPLOAD----------------------------------
+  //-------------------------UPLOAD--BUTTON--FUNC------------------------------
   const handleUpload = async () => {
     if (!file) return alert("Please select an image first!");
     const formData = new FormData();
@@ -34,9 +34,13 @@ function App() {
       alert("Processing failed!");
     }
   };
-  //-------------------------UPLOAD----------------------------------
+  //-------------------------UPLOAD--BUTTON--FUNCT------------------------------
   //-------------------------ASSETS----------------------------------
   const handleImageLoad = (e) => {
+    
+    
+    //size factors 
+    
     const { naturalWidth, naturalHeight } = e.target;
     setOriginalSize(`${naturalWidth} × ${naturalHeight}px`);
   };
@@ -58,8 +62,8 @@ function App() {
       <button onClick={handleUpload} role="button">Upload</button>
       
       <div>
-        <input className="resize_fields" id="width" type="number" min="1" placeholder="Width" />
-        <input className="resize_fields" id="height" type="number" min="1" placeholder="Height" />
+        <input onClick={handleSize} className="resize_fields" id="width" type="number" min="1" placeholder="Width" />
+        <input onClick={handleSize} className="resize_fields" id="height" type="number" min="1" placeholder="Height" />
       </div>
       
       <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center"}}>

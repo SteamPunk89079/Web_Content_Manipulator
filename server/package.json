@@ -16,7 +16,9 @@
 
     "clean":"npm run clean_upload && npm run clean_output && npm run clean_windows",
     
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+
+    "pdf_convert": "bash ./test_pdf/test.sh"
   },
   "type": "module",
   "keywords": [],

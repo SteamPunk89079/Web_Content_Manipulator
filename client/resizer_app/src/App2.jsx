@@ -62,8 +62,8 @@ function App() {
       <button onClick={handleUpload} role="button">Upload</button>
       
       <div>
-        <input onClick={handleSize} className="resize_fields" id="width" type="number" min="1" placeholder="Width" />
-        <input onClick={handleSize} className="resize_fields" id="height" type="number" min="1" placeholder="Height" />
+        <PictureInPictureEvent className="resize_fields" id="width" type="number" min="1" placeholder="Width" />
+        <input className="resize_fields" id="height" type="number" min="1" placeholder="Height" />
       </div>
       
       <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center"}}>

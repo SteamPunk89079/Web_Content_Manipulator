@@ -53,7 +53,7 @@ function App() {
   //-------------------------RENDER----------------------------------
   return (
     <div className="app_card">
-      <h1 style={{ fontWeight: "bold" }}>Third resizer</h1>
+      <h1 style={{ fontWeight: "bold" }}>Word to PDF</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
       <button onClick={handleUpload} role="button">Upload</button>
       

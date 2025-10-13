@@ -39,14 +39,9 @@ let ffmpegPath = "ffmpeg";
 let ffprobePath = "ffprobe";
 
 if (platform === "win32") {
-
-  //----------------------FFMPEG-LOCAL-PATH------------------------------------------------------
+  console.log("Running on Windows");
   ffmpegPath = `"D:\\_installers\\ffmpeg-2025-10-01-git-1a02412170-full_build\\bin\\ffmpeg.exe"`;
-  //----------------------FFMPEG-LOCAL-PATH------------------------------------------------------
-
   ffprobePath = ffmpegPath.replace("ffmpeg.exe", "ffprobe.exe");
-  console.log(`Running on Windows FFmpeg local filepath :${ffmpegPath}`);
-
 }else{
   console.log("Running on Mac OS");
 }
@@ -108,6 +103,6 @@ app.use("/uploads", express.static(uploadDir));
 app.use("/output", express.static(outputDir));
 //--------------------------------------------------------------
 
-app.listen(3001, () =>
-  console.log("✅ Server running on http://localhost:3001")
+app.listen(3002, () =>
+  console.log("✅ Server running on http://localhost:3002")
 );

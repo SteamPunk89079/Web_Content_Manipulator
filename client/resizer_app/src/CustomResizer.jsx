@@ -15,6 +15,7 @@ function CustomResizer() {
   //-------------------------UPLOAD--BUTTON--FUNC------------------------------
   const handleUpload = async () => {
     if (!file) return alert("Please select an image first!");
+    
     const formData = new FormData();
     formData.append("image", file);
     formData.append("width", width);
@@ -46,10 +47,6 @@ function CustomResizer() {
   //-------------------------UPLOAD--BUTTON--FUNCT------------------------------
   //-------------------------ASSETS----------------------------------
   const handleImageLoad = (e) => {
-    
-    
-    //size factors 
-    
     const { naturalWidth, naturalHeight } = e.target;
     setOriginalSize(`${naturalWidth} × ${naturalHeight}px`);
   };
@@ -60,6 +57,13 @@ function CustomResizer() {
       setProcessedSize(`${naturalWidth} × ${naturalHeight}px`);
     }
   };
+
+  const setWidthButtonFunct = (e) => {
+    setWidth(e.target.value);
+  }
+  const setHeightButtonFunct = (e) => {
+    setHeight(e.target.value);
+  }
   //-------------------------ASSETS----------------------------------
 
 
@@ -71,8 +75,8 @@ function CustomResizer() {
       <button onClick={() => {handleUpload();clearFields();}} role="button">Upload</button>
       
       <div>
-        <input className="resize_fields" id="width" type="number" min="1" placeholder="Width" value={width} onChange={(e) => setWidth(e.target.value)} />
-        <input className="resize_fields" id="height" type="number" min="1" placeholder="Height" value={height} onChange={(e) => setHeight(e.target.value)}/>
+        <input className="resize_fields" id="width" type="number" min="1" placeholder="Width" value={width} onChange={setWidthButtonFunct} />
+        <input className="resize_fields" id="height" type="number" min="1" placeholder="Height" value={height} onChange={setHeightButtonFunct}/>
       </div>
       
       <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center"}}>

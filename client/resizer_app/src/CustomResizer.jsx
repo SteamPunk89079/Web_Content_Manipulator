@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function App() {
+function CustomResizer() {
   const [file, setFile] = useState(null);
 
   const [outputUrl, setOutputUrl] = useState("");
@@ -9,11 +9,16 @@ function App() {
   const [originalSize, setOriginalSize] = useState("");
   const [processedSize, setProcessedSize] = useState("");
 
-  //-------------------------UPLOAD----------------------------------
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  //-------------------------UPLOAD--BUTTON--FUNC------------------------------
   const handleUpload = async () => {
     if (!file) return alert("Please select an image first!");
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("width", width);
+    formData.append("height", height);
 
     const res = await fetch("http://localhost:3001/process", {
       method: "POST",
@@ -34,9 +39,17 @@ function App() {
       alert("Processing failed!");
     }
   };
-  //-------------------------UPLOAD----------------------------------
+
+  const clearFields = () => {
+    setWidth(""); setHeight("");
+  };
+  //-------------------------UPLOAD--BUTTON--FUNCT------------------------------
   //-------------------------ASSETS----------------------------------
   const handleImageLoad = (e) => {
+    
+    
+    //size factors 
+    
     const { naturalWidth, naturalHeight } = e.target;
     setOriginalSize(`${naturalWidth} × ${naturalHeight}px`);
   };
@@ -52,12 +65,17 @@ function App() {
 
   //-------------------------RENDER----------------------------------
   return (
-    <div className="app_card">
-      <h1 style={{ fontWeight: "bold" }}>Word to PDF</h1>
+    <div className="app_card" >
+      <h1 style={{ fontWeight: "bold" }}>Custom resizer</h1>
       <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} />
-      <button onClick={handleUpload} role="button">Upload</button>
+      <button onClick={() => {handleUpload();clearFields();}} role="button">Upload</button>
       
-      <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center" }}>
+      <div>
+        <input className="resize_fields" id="width" type="number" min="1" placeholder="Width" value={width} onChange={(e) => setWidth(e.target.value)} />
+        <input className="resize_fields" id="height" type="number" min="1" placeholder="Height" value={height} onChange={(e) => setHeight(e.target.value)}/>
+      </div>
+      
+      <div style={{ display: "flex", gap: "10%", alignItems: "flex-start", justifyContent:"center"}}>
         {inputUrl && (
           <div>
             <h2>Initial Image:</h2>
@@ -69,7 +87,7 @@ function App() {
         {outputUrl && (
           <div>
             <h2>Processed Image:</h2>
-            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad} style={{border: "4px solid gold"}}/>
+            <img src={outputUrl} alt="Processed" width="400" onLoad={handleProcessedImageLoad} style={{border: "4px solid gold"}}s/>
             <h4>Processed size: {processedSize || "Loading..."}</h4>
           </div>
         )}
@@ -82,4 +100,4 @@ function App() {
   
 }
 
-export default App;
+export default CustomResizer;

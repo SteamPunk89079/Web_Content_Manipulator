@@ -53,6 +53,11 @@ app.post("/process", upload.single("image"), (req, res) => {
   const inputPath = path.join(uploadDir, req.file.filename);
   const outputPath = path.join(outputDir, "processed-" + req.file.filename);
 
+  const width = req.body.width || 800;
+  const height = req.body.height || 600;
+
+  console.log(`Scaling image to: ${width}x${height}`);
+
   const ffmpegCmd = `${ffmpegPath} -y -i "${inputPath}" -vf scale=800:600 "${outputPath}"`;
 
   exec(ffmpegCmd, (error, stdout, stderr) => {

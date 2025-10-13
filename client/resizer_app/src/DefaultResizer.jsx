@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function App() {
+function DefaultResizer() {
   const [file, setFile] = useState(null);
 
   const [outputUrl, setOutputUrl] = useState("");
@@ -82,4 +82,4 @@ function App() {
   
 }
 
-export default App;
+export default DefaultResizer;

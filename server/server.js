@@ -56,34 +56,44 @@ app.post("/process", upload.single("image"), (req, res) => {
   const width = req.body.width || 800;
   const height = req.body.height || 600;
 
-  console.log(`Scaling image to: ${width}x${height}`);
+  const ext = path.extname(req.file.originalname).toLowerCase();
+  const isImage = [".jpg", ".jpeg", ".png", ".gif"].includes(ext);
+  const isDoc = [".doc", ".docx", ".odt"].includes(ext);
+
 
   const ffmpegCmd = `${ffmpegPath} -y -i "${inputPath}" -vf scale=800:600 "${outputPath}"`;
+  const pdfConvert = "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf ../test_pdf/file-sample_100kB.doc --outdir output"
 
-  exec(ffmpegCmd, (error, stdout, stderr) => {
-    if (error) {
-      console.error("FFmpeg error:", error);
-      return res.status(500).send("Processing failed");
-    }
-
-    const ffprobeCmd = `${ffprobePath} -v error -show_entries stream=width,height -of csv=p=0:s=x "${outputPath}"`;
-
-    exec(ffprobeCmd, (probeError, probeStdout) => {
-      if (probeError) {
-        console.error("FFprobe error:", probeError);
-        return res.status(500).send("Failed to get output size");
+  if (isImage){
+    console.log("Is Image");
+    console.log(`Scaling image to: ${width}x${height}`);
+    exec(ffmpegCmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error("FFmpeg error:", error);
+        return res.status(500).send("Processing failed");
       }
 
-      const outputSize = probeStdout.trim(); // e.g. "800x600"
-      console.log(`✅ Processed ${req.file.filename} → ${outputSize}`);
+      const ffprobeCmd = `${ffprobePath} -v error -show_entries stream=width,height -of csv=p=0:s=x "${outputPath}"`;
+      
+      exec(ffprobeCmd, (probeError, probeStdout) => {
+        if (probeError) {
+          console.error("FFprobe error:", probeError);
+          return res.status(500).send("Failed to get output size");
+        }
 
-      res.json({
-        message: "Processing complete",
-        file: `processed-${req.file.filename}`,
-        size: outputSize,
+        const outputSize = probeStdout.trim(); // e.g. "800x600"
+        console.log(`✅ Processed ${req.file.filename} → ${outputSize}`);
+
+        res.json({
+          message: "Processing complete",
+          file: `processed-${req.file.filename}`,
+          size: outputSize,
+        });
       });
-    });
-  });
+    }); 
+  }else if (isDoc){
+    console.log("Is Document");
+  }
 });
 //--------------------------------------------------------------
 

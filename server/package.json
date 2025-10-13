@@ -11,6 +11,7 @@
     "clean_output": "Remove-Item .\\output\\* -Recurse -Force",
     "clean_output_windows": "rmdir /s /q output && mkdir output",
     "clean_windows": "npm run clean_upload_windows && npm run clean_output_windows",
+    "clean_macos":"rm -rf ./output && mkdir ./output && rm -rf ./uploads && mkdir ./uploads",
     
     "prebuild":"mkdir uploads && mkdir output",
 

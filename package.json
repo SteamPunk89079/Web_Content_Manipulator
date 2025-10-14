@@ -1,0 +1,23 @@
+{
+  "name": "web_content_manipulator",
+  "version": "1.0.0",
+  "description": "start server node server/server.js.",
+  "main": "server/server.js",
+  "scripts": {
+    "start_server": "cd server && node server.js",
+    "start_client": "cd client/resizer_app && npm run dev",
+    "start": "npm run start_server & npm run start_client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteamPunk89079/Web_Content_Manipulator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SteamPunk89079/Web_Content_Manipulator/issues"
+  },
+  "homepage": "https://github.com/SteamPunk89079/Web_Content_Manipulator#readme"
+}

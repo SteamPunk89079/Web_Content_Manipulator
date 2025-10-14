@@ -61,13 +61,14 @@ app.post("/process", upload.single("image"), (req, res) => {
 
   const width = req.body.width || 800;
   const height = req.body.height || 600;
+  console.log(`Specified width and height :${width}x${height}`)
 
   const ext = path.extname(req.file.originalname).toLowerCase();
   const isImage = [".jpg", ".jpeg", ".png", ".gif"].includes(ext);
   const isDoc = [".doc", ".docx", ".odt"].includes(ext);
 
 
-  const ffmpegCmd = `${ffmpegPath} -y -i "${inputPath}" -vf scale=800:600 "${outputPath}"`;
+  const ffmpegCmd = `${ffmpegPath} -y -i "${inputPath}" -vf scale=${width}:${height} "${outputPath}"`;
   const pdfConvert = "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf ../test_pdf/file-sample_100kB.doc --outdir output"
 
   if (isImage){
